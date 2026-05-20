@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MonadFit | Proof of Sweat</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@700;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0d0d0d;
+            --bg-surface: #1a1a1a;
+            --bg-card: #242424;
+            --accent: #FF3B00;
+            --accent-hover: #ff5522;
+            --accent-glow: rgba(255, 59, 0, 0.4);
+            --text-main: #f8f9fa;
+            --text-muted: #a1a1aa;
+            --border-color: #333;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .navbar-brand {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar-brand {
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--text-main) !important;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar-brand span {
+            color: var(--accent);
+        }
+
+        .nav-link {
+            color: var(--text-muted) !important;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-main) !important;
+        }
+
+        /* Buttons */
+        .btn-accent {
+            background-color: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+            color: #fff;
+        }
+
+        .btn-outline-accent {
+            background-color: transparent;
+            color: var(--accent);
+            font-weight: 600;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 8px 22px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-accent:hover {
+            background-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 120px 0 100px;
+            background: radial-gradient(circle at top, var(--bg-surface) 0%, var(--bg-dark) 80%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero-title .highlight {
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        /* Cards & Features */
+        .feature-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px 30px;
+            height: 100%;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        /* Dashboard Mockup */
+        .dashboard-section {
+            background-color: var(--bg-surface);
+            padding: 80px 0;
+        }
+
+        .dash-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 24px;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .wallet-badge {
+            background-color: rgba(255, 59, 0, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(255, 59, 0, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-box {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .badge-box i {
+            font-size: 3rem;
+            color: var(--accent);
+        }
+
+        /* Custom Table */
+        .table-dark {
+            --bs-table-bg: transparent;
+            --bs-table-border-color: var(--border-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-dark);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            color: var(--text-muted);
+        }
+
+        /* Coaching Marketplace */
+        .coach-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .coach-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .coach-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+
+        .verified-badge {
+            color: #10b981;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .coach-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 15px 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .coach-specialty {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+
+        .nav-pills .nav-link {
+            color: var(--text-muted);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-pills .nav-link:hover {
+            color: var(--text-main);
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        /* Modal Overrides */
+        .modal-content {
+            background-color: var(--bg-card);
+            border: 1px solid var(--accent);
+            color: var(--text-main);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .modal .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1. NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand" href="#">MONAD<span>FIT</span></a>
+            <button class="navbar-toggler navbar-dark border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link px-3" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#coaches">Coaches</a></li>
+                    <li class="nav-item ms-lg-3 mt-3 mt-lg-0 d-flex flex-column flex-lg-row gap-3 align-items-center">
+                        <span id="walletBalanceDisplay" class="text-white fw-bold d-none">
+                            <span id="mockMonadBalanceDisplay">58.00</span> MONAD
+                        </span>
+
+                        <div class="dropdown">
+                            <a class="nav-link text-white position-relative p-0" href="#" role="button"
+                                id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell-fill fs-5"></i>
+                                <span id="notificationBadge"
+                                    class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-dark rounded-circle d-none"
+                                    style="width: 10px; height: 10px;">
+                                    <span class="visually-hidden">New alerts</span>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow-lg"
+                                aria-labelledby="notificationDropdown" id="notificationList"
+                                style="width: 320px; max-height: 400px; overflow-y: auto;">
+                                <li>
+                                    <h6 class="dropdown-header">Recent Notifications</h6>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li id="emptyNotificationMsg"><a class="dropdown-item text-muted text-center"
+                                        href="#">No new notifications</a></li>
+                            </ul>
+                        </div>
+
+                        <button id="connectXBtn"
+                            class="btn btn-outline-accent d-flex align-items-center justify-content-center gap-2"
+                            onclick="simulateTwitterLogin()">
+                            <i class="bi bi-twitter-x"></i> Connect X
+                        </button>
+                        <span id="twitterBadgeContainer"
+                            class="badge bg-dark border border-secondary text-white py-2 px-3 rounded-pill d-none align-items-center gap-2"
+                            style="font-size: 0.9rem;">
+                            <i class="bi bi-twitter-x"></i> <span id="twitterHandleDisplay">@User_Fit</span> <i
+                                class="bi bi-patch-check-fill text-info"></i>
+                        </span>
+                        <button id="connectWalletBtn"
+                            class="btn btn-accent d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-wallet2"></i>Connect Wallet
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. HERO SECTION -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <h1 class="hero-title">Proof of <span class="highlight">Sweat</span><br>The Web3 Fitness Protocol
+                    </h1>
+                    <p class="hero-subtitle">Monetize your discipline, build your immutable on-chain fitness CV, and get
+                        rewarded for showing up. Powered by the Monad Network.</p>
+                    <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                        <a id="startStakingBtn" href="#dashboard" class="btn btn-accent btn-lg px-5 needs-auth"
+                            onclick="requireFullAuth(event)">Start
+                            Staking</a>
+                        <button class="btn btn-outline-accent btn-lg px-5 needs-auth"
+                            onclick="requireFullAuth(event, () => window.location.href='#coaches')">Explore
+                            Coaches</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. FEATURES GRID -->
+    <section id="features" class="py-5 my-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <i class="bi bi-safe2 feature-icon"></i>
+                        <h3 class="h4 mb-3">Stake-to-Commit</h3>
+                        <p class="text-white mb-0">Lock your MONAD tokens, go to the gym, and earn rewards. Miss your
+                            goal? Your stake is slashed and distributed to the disciplined.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <i class="bi bi-fingerprint feature-icon"></i>
+                        <h3 class="h4 mb-3">Verified SBT Profiles</h3>
+                        <p class="text-white mb-0">Your workouts are minted as Soulbound Tokens. Build an unbreakable
+                            on-chain fitness CV to unlock exclusive B2B discounts and gear.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <i class="bi bi-person-video3 feature-icon"></i>
+                        <h3 class="h4 mb-3">Premium Web3 Coaching</h3>
+                        <p class="text-white mb-0">Hire verified trainers with transparent, on-chain track records. Pay
+                            instantly via smart contracts with minimal platform fees.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. USER DASHBOARD MOCKUP -->
+    <section id="dashboard" class="dashboard-section">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3">
+                <div>
+                    <h2 class="mb-2">Athlete Dashboard</h2>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                        <div class="wallet-badge" id="dashboardWalletBadge">
+                            <div id="walletStatusIndicator" class="spinner-grow spinner-grow-sm text-danger"
+                                role="status" style="width: 0.5rem; height: 0.5rem;"></div>
+                            <span id="walletAddressDisplay">Not Connected</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <!-- Removed checkInBtn as logic shifted to Log Workout -->
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Data & Stats Column -->
+                <div class="col-lg-8">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="dash-card h-100">
+                                <div class="stat-label mb-2">Calories Burned</div>
+                                <div class="stat-value" id="caloriesVal">0 <i class="bi bi-fire ms-2"></i></div>
+                                <p class="text-muted mt-2 mb-0 small">Estimated from log</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="dash-card h-100">
+                                <div class="stat-label mb-2">Today's Sets</div>
+                                <div class="stat-value" id="setsVal">0</div>
+                                <p class="text-muted mt-2 mb-0 small">Total completed</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="dash-card h-100">
+                                <div class="stat-label mb-2">Today's Reps</div>
+                                <div class="stat-value" id="repsVal">0</div>
+                                <p class="text-muted mt-2 mb-0 small">Total volume</p>
+                            </div>
+                        </div>
+                        <!-- NEW WORKOUT ENTRY FORM -->
+                        <div class="col-12">
+                            <div class="dash-card">
+                                <h4 class="h6 mb-4 text-uppercase text-white fw-bold letter-spacing-1">Log Workout</h4>
+                                <form id="workoutForm" class="row g-3 align-items-end">
+                                    <div class="col-md-3">
+                                        <label for="activityInput"
+                                            class="form-label small fw-bold text-light">Activity</label>
+                                        <select id="activityInput"
+                                            class="form-select bg-dark text-white border-secondary">
+                                            <option value="Bench Press">Bench Press</option>
+                                            <option value="Squat">Squat</option>
+                                            <option value="Deadlift">Deadlift</option>
+                                            <option value="Pull-up">Pull-up</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="setsInput" class="form-label small fw-bold text-light">Sets</label>
+                                        <input type="number" id="setsInput"
+                                            class="form-control bg-dark text-white border-secondary" min="1" value="1">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="repsInput" class="form-label small fw-bold text-light">Reps</label>
+                                        <input type="number" id="repsInput"
+                                            class="form-control bg-dark text-white border-secondary" min="1" value="10">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="weightInput" class="form-label small fw-bold text-light">Weight
+                                            (kg)</label>
+                                        <input type="number" id="weightInput"
+                                            class="form-control bg-dark text-white border-secondary" min="0" value="60">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" id="logActivityBtn"
+                                            class="btn btn-accent w-100 needs-auth"
+                                            onclick="requireFullAuth(event, logWorkout)">
+                                            <i class="bi bi-plus-circle me-2"></i>Log Activity
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- TODAY'S LOG & FILTER -->
+                        <div class="col-12">
+                            <div class="dash-card">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h4 class="h6 text-uppercase text-white fw-bold letter-spacing-1 mb-0">Today's Log
+                                    </h4>
+                                    <div class="w-auto">
+                                        <select id="filterSelect"
+                                            class="form-select form-select-sm bg-dark text-white border-secondary"
+                                            onchange="filterLog()">
+                                            <option value="All">Show All</option>
+                                            <option value="Bench Press">Bench Press</option>
+                                            <option value="Squat">Squat</option>
+                                            <option value="Deadlift">Deadlift</option>
+                                            <option value="Pull-up">Pull-up</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-dark table-hover align-middle mb-0" id="workoutTable">
+                                        <thead>
+                                            <tr class="text-white text-uppercase font-monospace small fw-bold">
+                                                <th class="border-secondary text-white border-bottom-0"
+                                                    style="width: 50px;"></th>
+                                                <th class="border-secondary text-white border-bottom-0">ACTIVITY</th>
+                                                <th class="border-secondary text-white border-bottom-0">SETS</th>
+                                                <th class="border-secondary text-white border-bottom-0">REPS</th>
+                                                <th class="border-secondary text-white border-bottom-0">WEIGHT (KG)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="workoutList" class="text-white border-top-0">
+                                            <!-- Activities will be prepended here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Badge/SBT Collection Column -->
+                <div class="col-lg-4">
+                    <div class="dash-card h-100 text-center d-flex flex-column justify-content-center">
+                        <h4 class="h6 mb-4 text-uppercase text-white fw-bold text-start">SBT Collection</h4>
+
+                        <div class="badge-box mt-2 mx-auto">
+                            <img src="images/powerlifting.png" alt="Powerlifting Specialty"
+                                style="max-width: 70%; max-height: 70%; object-fit: contain;">
+                        </div>
+                        <h5 class="mb-1 text-white">Iron Lifter</h5>
+                        <p class="text-white small mb-4">Awarded for 50 total check-ins.</p>
+
+                        <div class="row g-3 mt-auto">
+                            <div class="col-6">
+                                <div class="p-3 border border-secondary rounded opacity-50 bg-dark">
+                                    <i class="bi bi-lock-fill fs-4 mb-2 d-block"></i>
+                                    <span class="small font-monospace text-white">30-Day Streak</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 border border-secondary rounded opacity-50 bg-dark">
+                                    <i class="bi bi-lock-fill fs-4 mb-2 d-block"></i>
+                                    <span class="small font-monospace text-white">Whale Staker</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. PREMIUM COACHING MARKETPLACE -->
+    <section id="coaches" class="py-5 my-5 bg-dark">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 gap-3">
+                <h2 class="mb-0">Premium Web3 Coaching</h2>
+
+                <!-- View Toggle (Athlete vs Coach) -->
+                <ul class="nav nav-pills" id="coachingTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active fw-bold" id="athlete-view-tab" data-bs-toggle="tab"
+                            data-bs-target="#athlete-view" type="button" role="tab">Athlete View (Find Coach)</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tab-content" id="coachingTabsContent">
+
+                <!-- ATHLETE VIEW: Coach Discovery Grid -->
+                <div class="tab-pane fade show active" id="athlete-view" role="tabpanel" tabindex="0">
+                    <div class="row g-4">
+                        <!-- Coach 1 -->
+                        <div class="col-md-4">
+                            <div class="coach-card h-100">
+                                <div class="coach-avatar"><img src="./images/bodybuilding.png" style="width:50px;">
+                                </div>
+                                <h3 class="h5 mb-2">Alex Titan</h3>
+                                <div class="verified-badge"><i class="bi bi-patch-check-fill"></i> On-Chain Verified
+                                </div>
+                                <a href="#" onclick="return false;"
+                                    class="text-decoration-none d-inline-block mb-3 w-100">
+                                    <span
+                                        class="badge bg-dark border border-secondary text-white py-1 px-2 rounded-pill"><i
+                                            class="bi bi-twitter-x me-1"></i> @AlexTitanFit <i
+                                            class="bi bi-patch-check-fill text-info ms-1"></i></span>
+                                </a>
+                                <div class="coach-specialty mb-0">Specialty: Powerlifting & Strength</div>
+                                <div class="coach-price">15 MONAD <span class="fs-6 text-white fw-normal">/ month</span>
+                                </div>
+                                <button class="btn btn-outline-accent w-100 mt-3 needs-auth"
+                                    onclick="requireFullAuth(event, () => requestCoaching(event.currentTarget))">Request
+                                    Coaching</button>
+                            </div>
+                        </div>
+                        <!-- Coach 2 -->
+                        <div class="col-md-4">
+                            <div class="coach-card h-100">
+                                <div class="coach-avatar"><img src="./images/HIIT.png" style="width: 50px;"></div>
+                                <h3 class="h5 mb-2">Sarah Velocity</h3>
+                                <div class="verified-badge"><i class="bi bi-patch-check-fill"></i> On-Chain Verified
+                                </div>
+                                <a href="#" onclick="return false;"
+                                    class="text-decoration-none d-inline-block mb-3 w-100">
+                                    <span
+                                        class="badge bg-dark border border-secondary text-white py-1 px-2 rounded-pill"><i
+                                            class="bi bi-twitter-x me-1"></i> @SarahVelo <i
+                                            class="bi bi-patch-check-fill text-info ms-1"></i></span>
+                                </a>
+                                <div class="coach-specialty mb-0">Specialty: HIIT & Endurance</div>
+                                <div class="coach-price">12 MONAD <span class="fs-6 text-white fw-normal">/ month</span>
+                                </div>
+                                <button class="btn btn-outline-accent w-100 mt-3 needs-auth"
+                                    onclick="requireFullAuth(event, () => requestCoaching(event.currentTarget))">Request
+                                    Coaching</button>
+                            </div>
+                        </div>
+                        <!-- Coach 3 -->
+                        <div class="col-md-4">
+                            <div class="coach-card h-100">
+                                <div class="coach-avatar"><img src="./images/powerlifting.png" style="width: 50px;">
+                                </div>
+                                <h3 class="h5 mb-2">Marcus Iron</h3>
+                                <div class="verified-badge"><i class="bi bi-patch-check-fill"></i> On-Chain Verified
+                                </div>
+                                <a href="#" onclick="return false;"
+                                    class="text-decoration-none d-inline-block mb-3 w-100">
+                                    <span
+                                        class="badge bg-dark border border-secondary text-white py-1 px-2 rounded-pill"><i
+                                            class="bi bi-twitter-x me-1"></i> @IronMarcus <i
+                                            class="bi bi-patch-check-fill text-info ms-1"></i></span>
+                                </a>
+                                <div class="coach-specialty mb-0">Specialty: Hypertrophy & Bodybuilding</div>
+                                <div class="coach-price">20 MONAD <span class="fs-6 text-white fw-normal">/ month</span>
+                                </div>
+                                <button class="btn btn-outline-accent w-100 mt-3 needs-auth"
+                                    onclick="requireFullAuth(event, () => requestCoaching(event.currentTarget))">Request
+                                    Coaching</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COACH VIEW: Request Management Panel -->
+                <div class="tab-pane fade" id="coach-view" role="tabpanel" tabindex="0">
+                    <div class="dash-card border-0 bg-transparent px-0">
+                        <h4 class="h5 mb-4">Incoming Coaching Requests</h4>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-muted font-monospace small border-bottom-0 pb-3">ATHLETE WALLET
+                                        </th>
+                                        <th class="text-muted font-monospace small border-bottom-0 pb-3">STATUS</th>
+                                        <th class="text-muted font-monospace small border-bottom-0 pb-3">SBT PROFILE
+                                        </th>
+                                        <th class="text-muted font-monospace small border-bottom-0 pb-3 text-end">
+                                            ACTIONS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="py-3 font-monospace">0x74B...3E1a</td>
+                                        <td class="py-3"><span
+                                                class="badge bg-warning bg-opacity-25 text-warning border border-warning">Pending</span>
+                                        </td>
+                                        <td class="py-3">
+                                            <button class="btn btn-sm btn-outline-info rounded-pill"
+                                                data-bs-toggle="modal" data-bs-target="#sbtProfileModal">
+                                                <i class="bi bi-eye me-1"></i>View Stats
+                                            </button>
+                                        </td>
+                                        <td class="py-3 text-end">
+                                            <button class="btn btn-sm btn-success me-2 needs-auth"
+                                                onclick="requireFullAuth(event, () => handleRequest(event.currentTarget, 'Accepted'))"><i
+                                                    class="bi bi-check-lg"></i>
+                                                Accept</button>
+                                            <button class="btn btn-sm btn-danger needs-auth"
+                                                onclick="requireFullAuth(event, () => handleRequest(event.currentTarget, 'Rejected'))"><i
+                                                    class="bi bi-x-lg"></i>
+                                                Reject</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 font-monospace">0x9F2...C44b</td>
+                                        <td class="py-3"><span
+                                                class="badge bg-warning bg-opacity-25 text-warning border border-warning">Pending</span>
+                                        </td>
+                                        <td class="py-3">
+                                            <button class="btn btn-sm btn-outline-info rounded-pill"
+                                                data-bs-toggle="modal" data-bs-target="#sbtProfileModal">
+                                                <i class="bi bi-eye me-1"></i>View Stats
+                                            </button>
+                                        </td>
+                                        <td class="py-3 text-end">
+                                            <button class="btn btn-sm btn-success me-2 needs-auth"
+                                                onclick="requireFullAuth(event, () => handleRequest(event.currentTarget, 'Accepted'))"><i
+                                                    class="bi bi-check-lg"></i>
+                                                Accept</button>
+                                            <button class="btn btn-sm btn-danger needs-auth"
+                                                onclick="requireFullAuth(event, () => handleRequest(event.currentTarget, 'Rejected'))"><i
+                                                    class="bi bi-x-lg"></i>
+                                                Reject</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SBT PROFILE MODAL -->
+    <div class="modal fade" id="sbtProfileModal" tabindex="-1" aria-labelledby="sbtProfileModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sbtProfileModalLabel"><i
+                            class="bi bi-fingerprint text-accent me-2"></i>Athlete SBT Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="badge-box mx-auto" style="width: 80px; height: 80px; margin-bottom: 0 !important;">
+                            <img src="images/HIIT.png" alt="HIIT Specialty"
+                                style="max-width: 70%; max-height: 70%; object-fit: contain;">
+                        </div>
+                        <h6 class="font-monospace text-muted mt-3 mb-0">0x74B...3E1a</h6>
+                    </div>
+
+                    <div class="row g-3 text-center mb-4">
+                        <div class="col-6">
+                            <div class="p-3 bg-dark rounded border border-secondary">
+                                <div class="text-muted small text-uppercase">Current Streak</div>
+                                <div class="fs-4 fw-bold text-accent">12 Days <i class="bi bi-fire"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 bg-dark rounded border border-secondary">
+                                <div class="text-muted small text-uppercase">Total Check-Ins</div>
+                                <div class="fs-4 fw-bold text-white">45</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6 class="text-muted text-uppercase small mb-3">Unlocked Badges</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-success bg-opacity-25 border border-success text-success py-2 px-3"><i
+                                class="bi bi-trophy me-1"></i> Iron Lifter</span>
+                        <span class="badge bg-info bg-opacity-25 border border-info text-info py-2 px-3"><i
+                                class="bi bi-star me-1"></i> Early Adopter</span>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center border-top-0">
+                    <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal">Close
+                        Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. FOOTER -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h5 class="text-white mb-3" style="font-family: 'Outfit', sans-serif;">MONAD<span
+                            style="color: var(--accent)">FIT</span></h5>
+                    <p class="small mb-0">Built for the Monad Hackathon 2026. Data on-chain. Discipline inside.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Ethers.js v6 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.11.1/ethers.umd.min.js"></script>
+
+    <!-- dApp Integration Logic -->
+    <script>
+
+        // BURAYA KENDİ KONTAR ADRESİNİ YAPIŞTIR (Remix'ten aldığın)
+        const contractAddress = "0xSENIN_REMIX_ADRESIN_BURAYA_GELECEK";
+
+        // BURAYA FitnessABI.json DOSYASININ İÇİNDEKİLERİ YAPIŞTIR
+        // Köşeli parantezlerle [...] başlayıp biter
+        const contractABI = [
+            // ... ABI İÇERİĞİ BURAYA ...
+        ];
+
+        // 1. GLOBAL AUTH STATE & IDENTITY GUARD
+        let isWalletConnected = false;
+        let isTwitterConnected = false;
+        let mockMonadBalance = 58.0;
+
+        function requireFullAuth(event, actionCallback) {
+            if (isWalletConnected && isTwitterConnected) {
+                if (typeof actionCallback === 'function') actionCallback();
+            } else {
+                if (event) event.preventDefault();
+
+                // Show Sleek UI Warning
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Identity Verification Required',
+                        text: 'Please connect BOTH your Web3 Wallet and X (Twitter) account to prove you are a real athlete before proceeding.',
+                        background: '#242424',
+                        color: '#f8f9fa',
+                        confirmButtonColor: '#FF3B00',
+                        customClass: { popup: 'border border-secondary' }
+                    });
+                } else {
+                    alert("Identity Verification Required: Please connect BOTH your Web3 Wallet and X (Twitter) account to prove you are a real athlete before proceeding.");
+                }
+            }
+        }
+
+        const connectBtn = document.getElementById('connectWalletBtn');
+
+        // 2. CÜZDAN BAĞLAMA FONKSİYONU
+        async function connectWallet() {
+            if (window.ethereum) { // Kullanıcının MetaMask'ı var mı kontrol et
+                try {
+                    // Ethers.js ile MetaMask'a bağlan
+                    provider = new ethers.BrowserProvider(window.ethereum);
+                    signer = await provider.getSigner();
+                    const address = await signer.getAddress();
+
+                    // Sözleşme objesini oluştur (Artık sözleşme ile konuşabiliriz)
+                    contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+                    // Arayüzdeki butonu güncelle (Adresin ilk ve son kısmını göster)
+                    connectBtn.innerHTML = `<i class="bi bi-wallet2 me-2"></i>${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+                    connectBtn.classList.replace('btn-accent', 'btn-outline-accent');
+
+                    // Dashboard wallet badge güncelle
+                    const walletBadgeDisplay = document.getElementById('walletAddressDisplay');
+                    const walletStatusIndicator = document.getElementById('walletStatusIndicator');
+                    if (walletBadgeDisplay && walletStatusIndicator) {
+                        walletBadgeDisplay.innerText = `Connected: ${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+                        walletStatusIndicator.classList.replace('text-danger', 'text-success');
+                    }
+
+                    const balanceDisplay = document.getElementById('walletBalanceDisplay');
+                    if (balanceDisplay) balanceDisplay.classList.remove('d-none');
+
+                    isWalletConnected = true; // Identity Guard state update
+
+                    console.log("Cüzdan bağlandı ve kontrat hazır!");
+                } catch (error) {
+                    console.error("Kullanıcı bağlantıyı reddetti", error);
+                }
+            } else {
+                alert("Lütfen tarayıcınıza MetaMask kurun!");
+            }
+        }
+
+        // 3. CHECK-IN YAPMA (SÖZLEŞMEYE VERİ YAZMA) FONKSİYONU (Auto-Check-In)
+        async function doCheckIn() {
+            if (!isWalletConnected) {
+                console.log("Cüzdan bağlı değil, on-chain check-in atlandı.");
+                return;
+            }
+
+            try {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: 'Recording Check-In...',
+                        text: 'Calling Smart Contract...',
+                        allowOutsideClick: false,
+                        didOpen: () => { Swal.showLoading(); },
+                        background: '#242424',
+                        color: '#f8f9fa'
+                    });
+                }
+
+                // Eğer kontrat ve signer varsa çağır
+                if (typeof contract !== 'undefined' && contract && contract.verifyCheckIn) {
+                    const transaction = await contract.verifyCheckIn(await signer.getAddress());
+                    await transaction.wait();
+                } else {
+                    // Kontrat yoksa simüle et
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                }
+
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success! Recorded On-Chain',
+                        text: 'Your workout and streak have been verified via smart contract.',
+                        background: '#242424',
+                        color: '#f8f9fa',
+                        confirmButtonColor: '#FF3B00'
+                    });
+                }
+            } catch (error) {
+                console.error("Check-in error:", error);
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Transaction Failed',
+                        text: error.message || 'Smart contract error',
+                        background: '#242424',
+                        color: '#f8f9fa'
+                    });
+                }
+            }
+        }
+
+        // Butonlara Tıklama Olaylarını Ekle
+        // --- Twitter (X) OAuth Simulation ---
+        async function simulateTwitterLogin() {
+            const btn = document.getElementById('connectXBtn');
+            const twitterBadge = document.getElementById('twitterBadgeContainer');
+
+            // UI: Loading State
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Verifying...`;
+            btn.disabled = true;
+
+            // Mock OAuth delay (1.5 seconds)
+            setTimeout(() => {
+                isTwitterConnected = true; // Identity Guard state update
+                // Success State
+                btn.classList.add('d-none'); // Hide the connect button
+                twitterBadge.classList.remove('d-none'); // Remove d-none
+                twitterBadge.classList.add('d-flex'); // Add d-flex so it aligns contents correctly
+
+                // Show Success Toast using SweetAlert2
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'X Account successfully linked to your SBT Profile!',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        background: '#242424',
+                        color: '#f8f9fa',
+                        iconColor: '#FF3B00',
+                        showClass: {
+                            popup: 'swal2-noanimation',
+                            backdrop: 'swal2-noanimation'
+                        },
+                        hideClass: {
+                            popup: '',
+                            backdrop: ''
+                        },
+                        customClass: {
+                            popup: 'border border-secondary'
+                        }
+                    });
+                }
+            }, 1500);
+        }
+
+        connectBtn.addEventListener('click', connectWallet);
+        connectXBtn.addEventListener('click', simulateTwitterLogin);
+
+        // --- Notification & Coach Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownEl = document.getElementById('notificationDropdown');
+            if (dropdownEl) {
+                dropdownEl.addEventListener('show.bs.dropdown', function () {
+                    const badge = document.getElementById('notificationBadge');
+                    if (badge) badge.classList.add('d-none');
+                });
+            }
+        });
+
+        function addNotification(message) {
+            const notificationList = document.getElementById('notificationList');
+            const emptyMsg = document.getElementById('emptyNotificationMsg');
+            const badge = document.getElementById('notificationBadge');
+
+            if (emptyMsg) emptyMsg.style.display = 'none';
+
+            const li = document.createElement('li');
+            li.innerHTML = `<a class="dropdown-item text-wrap text-white" href="#">${message}</a>`;
+            notificationList.insertBefore(li, notificationList.children[2]);
+
+            if (badge) badge.classList.remove('d-none');
+        }
+
+        function requestCoaching(btnElement) {
+            const card = btnElement.closest('.coach-card');
+            const coachName = card.querySelector('h3').innerText;
+            const priceText = card.querySelector('.coach-price').innerText;
+            const price = parseFloat(priceText);
+
+            if (mockMonadBalance < price) {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({ icon: 'error', title: 'Insufficient Funds', text: `You need ${price} MONAD to hire ${coachName}.`, background: '#242424', color: '#f8f9fa' });
+                } else {
+                    alert(`Insufficient Funds. You need ${price} MONAD.`);
+                }
+                return;
+            }
+
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your coaching request has been successfully sent to the Coach.',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    background: '#242424',
+                    color: '#f8f9fa',
+                    iconColor: '#10b981'
+                });
+            }
+
+            // Button loading state
+            const originalText = btnElement.innerText;
+            btnElement.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Waiting...`;
+            btnElement.disabled = true;
+
+            setTimeout(() => {
+                addNotification(`Request Accepted! ${coachName} is now your trainer.`);
+
+                mockMonadBalance -= price;
+                const balanceDisplay = document.getElementById('mockMonadBalanceDisplay');
+                if (balanceDisplay) balanceDisplay.innerText = mockMonadBalance.toFixed(2);
+
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `Smart Contract Executed: ${price} MONAD transferred to Coach.`,
+                        showConfirmButton: false,
+                        timer: 5000,
+                        background: '#242424',
+                        color: '#f8f9fa',
+                        iconColor: '#10b981'
+                    });
+                }
+
+                btnElement.classList.replace('btn-outline-accent', 'btn-success');
+                btnElement.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i>Active Trainer`;
+            }, 4000);
+        }
+
+        // --- Workout Logger Logic ---
+        let totalCalories = 0;
+        let totalSets = 0;
+        let totalReps = 0;
+
+        function logWorkout() {
+            const activity = document.getElementById('activityInput').value;
+            const sets = parseInt(document.getElementById('setsInput').value);
+            const reps = parseInt(document.getElementById('repsInput').value);
+            const weight = parseInt(document.getElementById('weightInput').value) || 0;
+
+            if (isNaN(sets) || sets <= 0 || isNaN(reps) || reps <= 0) {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Input',
+                        text: 'Sets and Reps must be greater than 0!',
+                        background: '#242424',
+                        color: '#f8f9fa',
+                        confirmButtonColor: '#FF3B00'
+                    });
+                } else {
+                    alert("Sets and Reps must be greater than 0!");
+                }
+                return;
+            }
+
+            // Calculate Mock Calories (Sets * Reps * 1.5)
+            const caloriesBurned = sets * reps * 1.5;
+
+            // Update Totals
+            totalCalories += caloriesBurned;
+            totalSets += sets;
+            totalReps += reps;
+
+            // Update UI Metric Cards
+            document.getElementById('caloriesVal').innerHTML = `${Math.round(totalCalories)} <i class="bi bi-fire ms-2"></i>`;
+            document.getElementById('setsVal').innerHTML = totalSets;
+            document.getElementById('repsVal').innerHTML = totalReps;
+
+            // Append to Table
+            const workoutList = document.getElementById('workoutList');
+            const tr = document.createElement('tr');
+            tr.className = 'workout-item text-white border-secondary';
+            tr.setAttribute('data-activity', activity);
+
+            tr.innerHTML = `
+                <td class="text-center border-secondary text-white py-3">
+                    <i class="bi bi-check2-square" style="color: var(--accent);"></i>
+                </td>
+                <td class="fw-bold border-secondary text-white py-3">${activity}</td>
+                <td class="font-monospace border-secondary text-white py-3">${sets}</td>
+                <td class="font-monospace border-secondary text-white py-3">${reps}</td>
+                <td class="font-monospace border-secondary text-white py-3">${weight}</td>
+            `;
+
+            // Prepend so the newest shows up first
+            workoutList.insertBefore(tr, workoutList.firstChild);
+
+            // Apply current filter to ensure it aligns with the view
+            filterLog();
+
+            // Auto-Streak Logic: trigger on-chain transaction
+            doCheckIn().then(() => {
+                // Activity Logging Gas Fee Simulation
+                if (mockMonadBalance >= 0.01) {
+                    mockMonadBalance -= 0.01;
+                    const balanceDisplay = document.getElementById('mockMonadBalanceDisplay');
+                    if (balanceDisplay) balanceDisplay.innerText = mockMonadBalance.toFixed(2);
+
+                    if (typeof Swal !== 'undefined') {
+                        setTimeout(() => {
+                            Swal.fire({
+                                toast: true,
+                                position: 'bottom-end',
+                                icon: 'info',
+                                title: 'Workout verified on-chain. Gas fee: 0.01 MONAD.',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                background: '#242424',
+                                color: '#f8f9fa'
+                            });
+                        }, 500);
+                    }
+                }
+            });
+        }
+
+        function filterLog() {
+            const filterValue = document.getElementById('filterSelect').value;
+            const items = document.querySelectorAll('.workout-item');
+
+            items.forEach(item => {
+                if (filterValue === 'All' || item.getAttribute('data-activity') === filterValue) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

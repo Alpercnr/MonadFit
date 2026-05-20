@@ -1,0 +1,56 @@
+[
+    {
+        "inputs": [],
+        "name": "checkIn",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_athlete",
+                "type": "address"
+            }
+        ],
+        "name": "getAthleteData",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_bench",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_squat",
+                "type": "uint256"
+            }
+        ],
+        "name": "saveWorkout",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]
