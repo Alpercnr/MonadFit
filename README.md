@@ -39,9 +39,3 @@ Platform; sporcuların antrenman geçmişini korur, kişisel rekorlarını satı
 </p>
 
 ---
-
-## 🛠️ Teknolojiler (Tech Stack)
-
-* **Blockchain Networks:** Anti-Gravity Network, Monad
-* **Smart Contracts:** Solidity (veya projende ne kullandıysan burayı güncelleyebilirsin)
-* **Frontend:** Next.js / React, Tailwind CSS (projene göre özelleştirebilirsin)
